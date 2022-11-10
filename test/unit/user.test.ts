@@ -1,5 +1,5 @@
-import Role from "../../src/domain/models/Role";
-import User from "../../src/domain/models/User";
+import Role from "../../src/core/domain/models/Role";
+import User from "../../src/core/domain/models/User";
 
 describe("User creation", () => {
     it("Uuid is required", () => {
