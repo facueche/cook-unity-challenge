@@ -9,6 +9,7 @@ describe("Chef", () => {
         
         expect(response.statusCode).toEqual(201);
         expect(response.body).toHaveProperty("message");
+        expect(response.body.message).toEqual("Successfully registered");
     });
 
     it("Should login as chef", async () => {
@@ -29,6 +30,7 @@ describe("Customer", () => {
         
         expect(response.statusCode).toEqual(201);
         expect(response.body).toHaveProperty("message");
+        expect(response.body.message).toEqual("Successfully registered");
     });
 
     it("Should login as customer", async () => {
