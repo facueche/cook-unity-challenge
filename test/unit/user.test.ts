@@ -1,4 +1,3 @@
-import { equal } from "assert";
 import Role from "../../src/domain/Role";
 import User from "../../src/domain/User";
 
