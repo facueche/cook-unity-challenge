@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+  cook-unity-express:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cook-unity-api
+    depends_on:
+      - cook-unity-postgres
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    ports:
+      - "${APP_PORT}:3000"
+    networks:
+      - cookunity-network
+
+  cook-unity-postgres:
+    container_name: cook-unity-db
+    restart: always
+    image: "postgres:15"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "cookunitydb"
+    volumes:
+      - ./docker/storage/postgres:/var/lib/postgresql/data
+    networks:
+      - cookunity-network
+
+networks:
+  cookunity-network:
+    driver: bridge
