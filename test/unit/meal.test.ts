@@ -1,6 +1,6 @@
-import Meal from "../../src/domain/Meal";
-import Role from "../../src/domain/Role";
-import User from "../../src/domain/User";
+import Meal from "../../src/domain/models/Meal";
+import Role from "../../src/domain/models/Role";
+import User from "../../src/domain/models/User";
 
 describe("Meal creation", () => {
     it("Uuid is required", () => {

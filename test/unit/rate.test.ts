@@ -1,7 +1,7 @@
-import Meal from "../../src/domain/Meal";
-import Rate from "../../src/domain/Rate";
-import Role from "../../src/domain/Role";
-import User from "../../src/domain/User";
+import Meal from "../../src/domain/models/Meal";
+import Rate from "../../src/domain/models/Rate";
+import Role from "../../src/domain/models/Role";
+import User from "../../src/domain/models/User";
 
 describe("Rating registration", () => {
     it("Uuid is required", () => {
