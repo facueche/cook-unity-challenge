@@ -1,7 +1,5 @@
 import express from "express";
-import path from "path";
-
-import { loadApiEndpoints } from "./api";
+import { loadApiEndpoints } from "./core/infrastructure/routes/api";
 
 // Create Express server
 const app = express();
