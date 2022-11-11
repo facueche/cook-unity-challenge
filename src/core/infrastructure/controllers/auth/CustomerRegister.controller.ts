@@ -1,8 +1,19 @@
 import { Request, Response } from "express";
+import EventManager from "../../../../common/events/Event.manager";
+import CustomerRegisterService from "../../../application/auth/CustomerRegister.service";
+import UserRepository from "../../../domain/repositories/User.repository";
+import PrismaUserRepository from "../../repositories/PrismaUser.repository";
 import CustomerRegister from "./types/CustomerRegister";
 
 const CustomerRegisterController = async (req: Request, res: Response) => {
-    const body: CustomerRegister = req.body;
+    const { username, password }: CustomerRegister = req.body;
+    const repository: UserRepository = new PrismaUserRepository();
+    const customerRegisterService: CustomerRegisterService = new CustomerRegisterService(username, password, repository);
+
+    customerRegisterService.handle();
+
+    EventManager.commitAll();
+
     const response = {
         message: "Successfully registered"
     };
