@@ -1,3 +1,4 @@
+import UsernameAlreadyRegisteredException from "../../domain/exceptions/UsernameAlreadyRegistered.exception";
 import Role from "../../domain/models/Role";
 import User from "../../domain/models/User";
 import UserRepository from "../../domain/repositories/User.repository";
@@ -15,8 +16,11 @@ export default class CustomerRegisterService
         this.repository = repository;
     }
 
-    public handle(): User
+    public async handle(): Promise<User>
     {
+        if (await this.repository.usernameIsAlreadyRegistered(this.username))
+            throw new UsernameAlreadyRegisteredException("Username already exists");
+
         const uuid = this.repository.generateUuid();
         const role = Role.CUSTOMER;
 
