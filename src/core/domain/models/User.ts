@@ -41,7 +41,8 @@ export default class User
 
     public static register(uuid: string, username: string, password: string, role: Role): User
     {
-        return new User(uuid, username, password,role);
+        const user = new User(uuid, username, password,role);
+        return user;
     }
 
     public getUuid(): string
