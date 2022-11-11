@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 const ChefLoginController = async (req: Request, res: Response) => {
+    const body: ChefLogin = req.body;
     const response = {
         token: "token"
     };
