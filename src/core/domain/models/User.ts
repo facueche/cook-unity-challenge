@@ -1,3 +1,5 @@
+import EventManager from "../../../common/events/Event.manager";
+import UserRegistered from "../events/UserRegistered";
 import Role from "./Role";
 
 export default class User
@@ -42,6 +44,9 @@ export default class User
     public static register(uuid: string, username: string, password: string, role: Role): User
     {
         const user = new User(uuid, username, password,role);
+
+        EventManager.dispatch(new UserRegistered(user));
+
         return user;
     }
 
@@ -53,6 +58,11 @@ export default class User
     public getUsername(): string
     {
         return this.username;
+    }
+
+    public getPassword(): string
+    {
+        return this.password;
     }
 
     public getRole(): Role
