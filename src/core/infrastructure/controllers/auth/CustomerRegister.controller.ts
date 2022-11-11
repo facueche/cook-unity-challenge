@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import CustomerRegister from "./types/CustomerRegister";
 
 const CustomerRegisterController = async (req: Request, res: Response) => {
     const body: CustomerRegister = req.body;
