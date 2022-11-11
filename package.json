@@ -9,9 +9,10 @@
     "build": "tsc",
     "lint": "eslint --ignore-path .gitignore . --ext .ts",
     "lint:fix": "npm run lint -- --fix",
-    "run-jest": "jest --verbose",
-    "docker:test": "docker-compose up -d && docker exec cook-unity-api npm test && docker-compose down",
-    "test": "npm run run-jest"
+    "test": "jest",
+    "database:reset": "npx prisma migrate reset --preview-feature --force && npx prisma migrate dev --name init",
+    "docker:test": "./docker-test.sh",
+    "run-jest": "npm run docker:test"
   },
   "author": "",
   "license": "ISC",

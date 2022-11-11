@@ -1,5 +1,6 @@
 import request from "supertest";
 import app from "../../src/app";
+import * as DatabaseConfig from '../databaseConfig';
 
 describe("Chef", () => {
     it("Register username is required", async () => {
@@ -9,7 +10,7 @@ describe("Chef", () => {
         const response = await request(app)
             .post("/chef/register")
             .send(tempCredentials);
-        
+
         expect(response.statusCode).toEqual(422);
     });
 
@@ -20,7 +21,7 @@ describe("Chef", () => {
         const response = await request(app)
             .post("/chef/register")
             .send(tempCredentials);
-        
+
         expect(response.statusCode).toEqual(422);
     });
 
@@ -28,7 +29,7 @@ describe("Chef", () => {
         const response = await request(app)
             .post("/chef/register")
             .send(credentials);
-        
+
         expect(response.statusCode).toEqual(201);
         expect(response.body).toHaveProperty("message");
         expect(response.body.message).toEqual("Successfully registered");
@@ -41,7 +42,7 @@ describe("Chef", () => {
         const response = await request(app)
             .post("/chef/login")
             .send(tempCredentials);
-        
+
         expect(response.statusCode).toEqual(422);
     });
 
@@ -52,7 +53,7 @@ describe("Chef", () => {
         const response = await request(app)
             .post("/chef/login")
             .send(tempCredentials);
-        
+
         expect(response.statusCode).toEqual(422);
     });
 
@@ -60,7 +61,7 @@ describe("Chef", () => {
         const response = await request(app)
             .post("/chef/login")
             .send(credentials);
-        
+
         expect(response.statusCode).toEqual(200);
         expect(response.body).toHaveProperty("token");
     });
@@ -74,7 +75,7 @@ describe("Customer", () => {
         const response = await request(app)
             .post("/customer/register")
             .send(tempCredentials);
-        
+
         expect(response.statusCode).toEqual(422);
     });
 
@@ -85,7 +86,7 @@ describe("Customer", () => {
         const response = await request(app)
             .post("/customer/register")
             .send(tempCredentials);
-        
+
         expect(response.statusCode).toEqual(422);
     });
 
@@ -93,7 +94,7 @@ describe("Customer", () => {
         const response = await request(app)
             .post("/customer/register")
             .send(credentials);
-        
+
         expect(response.statusCode).toEqual(201);
         expect(response.body).toHaveProperty("message");
         expect(response.body.message).toEqual("Successfully registered");
@@ -106,7 +107,7 @@ describe("Customer", () => {
         const response = await request(app)
             .post("/customer/login")
             .send(tempCredentials);
-        
+
         expect(response.statusCode).toEqual(422);
     });
 
@@ -117,7 +118,7 @@ describe("Customer", () => {
         const response = await request(app)
             .post("/customer/login")
             .send(tempCredentials);
-        
+
         expect(response.statusCode).toEqual(422);
     });
 
@@ -125,10 +126,18 @@ describe("Customer", () => {
         const response = await request(app)
             .post("/customer/login")
             .send(credentials);
-        
+
         expect(response.statusCode).toEqual(200);
         expect(response.body).toHaveProperty("token");
     });
+
+    beforeAll(() => {
+        DatabaseConfig.tearUp();
+    });
+
+    afterAll(() => {
+        DatabaseConfig.tearDown();
+    })
 });
 
 const credentials = {
