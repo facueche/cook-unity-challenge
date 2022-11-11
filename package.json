@@ -9,7 +9,9 @@
     "build": "tsc",
     "lint": "eslint --ignore-path .gitignore . --ext .ts",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest --verbose"
+    "run-jest": "jest --verbose",
+    "docker:test": "docker-compose up -d && docker exec cook-unity-api npm test && docker-compose down",
+    "test": "npm run run-jest"
   },
   "author": "",
   "license": "ISC",
