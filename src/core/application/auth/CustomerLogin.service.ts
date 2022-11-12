@@ -4,7 +4,7 @@ import User from "../../domain/models/User";
 import UserRepository from "../../domain/repositories/User.repository";
 import AuthService from "./Auth.service";
 
-export default class ChefLoginService extends AuthService
+export default class CustomerLoginService extends AuthService
 {
     private username: string;
     private password: string;
@@ -22,7 +22,7 @@ export default class ChefLoginService extends AuthService
     {
         const user: User = await this.repository.findByUsernameAndPassword(this.username, this.password);
 
-        if (user.getRole() !== Role.CHEF)
+        if (user.getRole() !== Role.CUSTOMER)
             throw new UserNotFoundException("User not found");
 
         return this.attemptToLogin(user);

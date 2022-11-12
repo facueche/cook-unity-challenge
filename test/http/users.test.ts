@@ -102,7 +102,7 @@ describe("Customer", () => {
 
     it("should register as customer", async () => {
         let tempCredentials = { ...credentials };
-        tempCredentials.username = `${credentials.username}_`;  // Just to be different
+        tempCredentials.username = `${credentials.username}_`;
         const response = await request(app)
             .post("/customer/register")
             .send(tempCredentials);
@@ -135,6 +135,13 @@ describe("Customer", () => {
     });
 
     it("Should login as customer", async () => {
+        let tempCredentials = { ...credentials };
+        tempCredentials.username = `${credentials.username}_customer`;
+
+        await request(app)
+            .post("/customer/register")
+            .send(tempCredentials);
+
         const response = await request(app)
             .post("/customer/login")
             .send(credentials);
