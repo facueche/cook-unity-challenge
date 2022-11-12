@@ -43,11 +43,16 @@ export default class User
 
     public static register(uuid: string, username: string, password: string, role: Role): User
     {
-        const user = new User(uuid, username, password,role);
+        const user = User.make(uuid, username, password, role);
 
         EventManager.dispatch(new UserRegistered(user));
 
         return user;
+    }
+
+    public static make(uuid: string, username: string, password: string, role: Role): User
+    {
+        return new User(uuid, username, password, role);
     }
 
     public getUuid(): string

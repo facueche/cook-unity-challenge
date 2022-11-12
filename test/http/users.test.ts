@@ -61,9 +61,16 @@ describe("Chef", () => {
     });
 
     it("Should login as chef", async () => {
+        let tempCredentials = { ...credentials };
+        tempCredentials.username = `${credentials.username}_chef`;
+        
+        await request(app)
+            .post("/chef/register")
+            .send(tempCredentials);
+
         const response = await request(app)
             .post("/chef/login")
-            .send(credentials);
+            .send(tempCredentials);
 
         expect(response.statusCode).toEqual(200);
         expect(response.body).toHaveProperty("token");
