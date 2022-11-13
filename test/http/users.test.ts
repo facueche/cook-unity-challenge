@@ -144,7 +144,7 @@ describe("Customer", () => {
 
         const response = await request(app)
             .post("/customer/login")
-            .send(credentials);
+            .send(tempCredentials);
 
         expect(response.statusCode).toEqual(200);
         expect(response.body).toHaveProperty("token");
