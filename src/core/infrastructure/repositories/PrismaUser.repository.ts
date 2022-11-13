@@ -4,6 +4,7 @@ import { PrismaClient } from '@prisma/client'
 import User from "../../domain/models/User";
 import UserNotFoundException from "../../domain/exceptions/UserNotFound.exception";
 import Role from "../../domain/models/Role";
+import Prisma from "../singletons/Prisma";
 
 export default class PrismaUserRepository extends PrismaModelRepository implements UserRepository
 {
@@ -12,7 +13,7 @@ export default class PrismaUserRepository extends PrismaModelRepository implemen
     public constructor()
     {
         super();
-        this.prisma = new PrismaClient()
+        this.prisma = Prisma.getInstance().getClient();
     }
 
     public async usernameIsAlreadyRegistered(username: string): Promise<boolean>
