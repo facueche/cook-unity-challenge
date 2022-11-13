@@ -40,4 +40,18 @@ export default class PrismaUserRepository extends PrismaModelRepository implemen
 
         return User.make(user.uuid, user.username, user.password, user.role as Role);
     }
+
+    public async findeByUuid(uuid: string): Promise<User>
+    {
+        const user = await this.prisma.users.findFirst({
+            where: {
+                uuid
+            }
+        });
+
+        if (user === null)
+            throw new UserNotFoundException("User not found");
+
+        return User.make(user.uuid, user.username, user.password, user.role as Role);
+    }
 }
