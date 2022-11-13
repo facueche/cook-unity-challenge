@@ -26,7 +26,7 @@ const chefRouter: Router = Router();
 chefRouter.post("/register", ChefRegisterRequest, RequestFiledsValidation, ChefRegisterController);
 chefRouter.post("/login", ChefLoginRequest, RequestFiledsValidation, ChefLoginController);
 chefRouter.post("/meals", AuthTokenMiddleware, RoleMiddleware(Role.CHEF), CreateMealController);
-chefRouter.get("/meals", ShowChefMealsController);
+chefRouter.get("/meals", AuthTokenMiddleware, RoleMiddleware(Role.CHEF), ShowChefMealsController);
 
 const customerRouter: Router = Router();
 customerRouter.post("/register", CustomerRegisterRequest, RequestFiledsValidation, CustomerRegisterController);
@@ -34,4 +34,4 @@ customerRouter.post("/login", CustomerLoginRequest, RequestFiledsValidation, Cus
 
 const mealRouter: Router = Router();
 mealRouter.post("/:uuid/rate", AuthTokenMiddleware, RoleMiddleware(Role.CUSTOMER), RateMealController);
-mealRouter.get("/", ShowAllMealsController);
+mealRouter.get("/", AuthTokenMiddleware, RoleMiddleware(Role.CUSTOMER), ShowAllMealsController);

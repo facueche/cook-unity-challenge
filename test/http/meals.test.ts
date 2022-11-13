@@ -29,7 +29,7 @@ describe("Chef", () => {
         expect(response.body.message).toEqual("Meal created");
     });
 
-    it("Should see list of meals with rate", async () => {
+    it("Should see his/her list of meals with rate", async () => {
         const response = await request(app)
             .get("/chef/meals")
             .set("Authorization", `Bearer ${chefAuthToken}`);
@@ -37,6 +37,16 @@ describe("Chef", () => {
         expect(response.statusCode).toEqual(200);
         expect(response.body).toHaveProperty("data");
         expect(Array.isArray(response.body.data)).toBe(true);
+    });
+
+    it("Should not see all the list of meals", async () => {
+        const response = await request(app)
+            .get("/meals")
+            .set("Authorization", `Bearer ${chefAuthToken}`);
+
+        expect(response.statusCode).toEqual(403);
+        expect(response.body).toHaveProperty("error");
+        expect(response.body.error).toEqual("Unauthorized");
     });
 
     it("Should not rate a meal", async () => {
@@ -60,7 +70,17 @@ describe("Customer", () => {
         expect(response.statusCode).toEqual(403);
     });
 
-    it("should see list of meals", async () => {
+    it("Should not see chefs' meal list", async () => {
+        const response = await request(app)
+            .get("/chef/meals")
+            .set("Authorization", `Bearer ${customerAuthToken}`);
+
+        expect(response.statusCode).toEqual(403);
+        expect(response.body).toHaveProperty("error");
+        expect(response.body.error).toEqual("Unauthorized");
+    });
+
+    it("Should see list all meals", async () => {
         const response = await request(app)
             .get("/meals")
             .set("Authorization", `Bearer ${customerAuthToken}`);
