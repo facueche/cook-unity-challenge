@@ -1,3 +1,5 @@
+import EventManager from "../../../common/events/Event.manager";
+import MealCreated from "../events/MealCreated";
 import User from "./User";
 
 export default class Meal
@@ -5,6 +7,8 @@ export default class Meal
     private uuid: string = "";
     private name: string = "";
     private chef: User;
+
+    private averageRate?: number;
 
     private constructor(uuid: string, name: string, chef: User)
     {
@@ -31,8 +35,16 @@ export default class Meal
 
     public static register(uuid: string, name: string, chef: User): Meal
     {
-        const meal = new Meal(uuid, name, chef);
+        const meal = Meal.make(uuid, name, chef);
+
+        EventManager.dispatch(new MealCreated(meal));
+
         return meal;
+    }
+
+    public static make(uuid: string, name: string, chef: User): Meal
+    {
+        return new Meal(uuid, name, chef);
     }
 
     public getUuid(): string
@@ -48,5 +60,15 @@ export default class Meal
     public getChef(): User
     {
         return this.chef;
+    }
+
+    public withAverageRate(averageRate: number)
+    {
+        this.averageRate = averageRate;
+    }
+
+    public getAverageRate(): number | undefined
+    {
+        return this.averageRate;
     }
 }

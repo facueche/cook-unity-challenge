@@ -29,6 +29,7 @@ model Meals {
 
 model Rates {
   uuid       String @id
+  rate       Int
   customer   Users  @relation(fields: [customerId], references: [uuid])
   customerId String
   meal       Meals  @relation(fields: [mealId], references: [uuid])
