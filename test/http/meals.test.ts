@@ -30,11 +30,6 @@ describe("Chef", () => {
     });
 
     it("Should see his/her list of meals with rate", async () => {
-        Meal.register("asdasd", "Name 01", chef);
-        Meal.register("qweqwe", "Name 02", chef);
-        Meal.register("zxczxc", "Name 03", chef);
-        EventManager.commitAll();
-
         const response = await request(app)
             .get("/chef/meals")
             .set("Authorization", `Bearer ${chefAuthToken}`);
