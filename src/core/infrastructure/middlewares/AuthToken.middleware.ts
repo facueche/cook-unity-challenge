@@ -3,7 +3,6 @@ import VerifyAuthTokenService from "../../application/auth/VerifyAuthToken.servi
 import InvalidAuthTokenException from "../../domain/exceptions/InvalidAuthToken.exception";
 import UserRepository from "../../domain/repositories/User.repository";
 import PrismaUserRepository from "../repositories/PrismaUser.repository";
-import WithAuthRequest from "../requests/WithAuth.request";
 
 const AuthTokenMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -17,8 +16,7 @@ const AuthTokenMiddleware = async (req: Request, res: Response, next: NextFuncti
 
             const user = await verifyToken.handle();
     
-            const request: WithAuthRequest = req as WithAuthRequest;
-            request.user = user;
+            req.body = { ...req.body, user }
     
             next();
         } else {

@@ -6,7 +6,7 @@ export default class AuthService
 {
     public constructor () {}
 
-    protected attemptToLogin(user: User): string
+    public attemptToLogin(user: User): string
     {
         const auth: Authenticable = {
             uuid: user.getUuid(),
