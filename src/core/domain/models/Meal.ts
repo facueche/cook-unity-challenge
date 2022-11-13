@@ -31,7 +31,8 @@ export default class Meal
 
     public static register(uuid: string, name: string, chef: User): Meal
     {
-        return new Meal(uuid, name, chef);
+        const meal = new Meal(uuid, name, chef);
+        return meal;
     }
 
     public getUuid(): string

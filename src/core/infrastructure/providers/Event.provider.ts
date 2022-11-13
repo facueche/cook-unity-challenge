@@ -1,13 +1,18 @@
 import EventEmitter from "../../../common/events/Event.emitter";
+import MealCreated from "../../domain/events/MealCreated";
 import UserRegistered from "../../domain/events/UserRegistered";
+import StoreMeal from "../listeners/StoreMeal";
 import StoreUser from "../listeners/StoreUser";
 
 export default class EventProvider
 {
     private events = {
         [UserRegistered.eventName]: [
-            StoreUser.handle
-        ]
+            StoreUser.handle,
+        ],
+        [MealCreated.eventName]: [
+            StoreMeal.handle,
+        ],
     }
 
     public constructor()

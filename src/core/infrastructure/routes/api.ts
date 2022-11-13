@@ -15,6 +15,7 @@ import ChefLoginRequest from "../requests/auth/ChefLogin.request";
 import ChefRegisterRequest from "../requests/auth/ChefRegister.request";
 import CustomerLoginRequest from "../requests/auth/CustomerLogin.request";
 import CustomerRegisterRequest from "../requests/auth/CustomerRegister.request";
+import CreateMealRequest from "../requests/meals/CreateMeal.request";
 
 export const loadApiEndpoints = (app: Application): void => {
     app.use("/chef", chefRouter);
@@ -22,16 +23,61 @@ export const loadApiEndpoints = (app: Application): void => {
     app.use("/meals", mealRouter);
 };
 
+/** CHEF */
 const chefRouter: Router = Router();
-chefRouter.post("/register", ChefRegisterRequest, RequestFiledsValidation, ChefRegisterController);
-chefRouter.post("/login", ChefLoginRequest, RequestFiledsValidation, ChefLoginController);
-chefRouter.post("/meals", AuthTokenMiddleware, RoleMiddleware(Role.CHEF), CreateMealController);
-chefRouter.get("/meals", AuthTokenMiddleware, RoleMiddleware(Role.CHEF), ShowChefMealsController);
+chefRouter.post(
+    "/register",
+    ChefRegisterRequest,
+    RequestFiledsValidation,
+    ChefRegisterController
+);
+chefRouter.post(
+    "/login",
+    ChefLoginRequest,
+    RequestFiledsValidation,
+    ChefLoginController
+);
+chefRouter.post(
+    "/meals",
+    AuthTokenMiddleware,
+    RoleMiddleware(Role.CHEF),
+    CreateMealRequest,
+    RequestFiledsValidation,
+    CreateMealController
+);
+chefRouter.get(
+    "/meals",
+    AuthTokenMiddleware,
+    RoleMiddleware(Role.CHEF),
+    ShowChefMealsController
+);
 
+/** CUSTOMER */
 const customerRouter: Router = Router();
-customerRouter.post("/register", CustomerRegisterRequest, RequestFiledsValidation, CustomerRegisterController);
-customerRouter.post("/login", CustomerLoginRequest, RequestFiledsValidation, CustomerLoginController);
+customerRouter.post(
+    "/register",
+    CustomerRegisterRequest,
+    RequestFiledsValidation,
+    CustomerRegisterController
+);
+customerRouter.post(
+    "/login",
+    CustomerLoginRequest,
+    RequestFiledsValidation,
+    CustomerLoginController
+);
 
+/** MEAL */
 const mealRouter: Router = Router();
-mealRouter.post("/:uuid/rate", AuthTokenMiddleware, RoleMiddleware(Role.CUSTOMER), RateMealController);
-mealRouter.get("/", AuthTokenMiddleware, RoleMiddleware(Role.CUSTOMER), ShowAllMealsController);
+mealRouter.post(
+    "/:uuid/rate",
+    AuthTokenMiddleware,
+    RoleMiddleware(Role.CUSTOMER),
+    RateMealController
+);
+mealRouter.get(
+    "/",
+    AuthTokenMiddleware,
+    RoleMiddleware(Role.CUSTOMER),
+    ShowAllMealsController
+);

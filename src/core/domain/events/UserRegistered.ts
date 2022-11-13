@@ -26,7 +26,9 @@ export default class UserRegistered extends Event
     public getPayload(): EventPayload
     {
         return {
+            uuid: this.user.getUuid(),
             username: this.user.getUsername(),
+            role: this.user.getRole()
         }
     }
 
