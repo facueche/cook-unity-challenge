@@ -179,7 +179,6 @@ describe('User', () => {
     });
 })
 
-
 beforeAll(() => {
     DatabaseConfig.tearUp();
 });
