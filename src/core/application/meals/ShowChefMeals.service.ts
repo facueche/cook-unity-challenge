@@ -15,6 +15,6 @@ export default class ShowChefMealsService
 
     public async handle(): Promise<Meal[]>
     {
-        return this.repository.fetchByChef(this.chef);
+        return this.repository.fetchByChefWithRateAverage(this.chef);
     }
 }

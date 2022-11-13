@@ -8,6 +8,7 @@ export default class Meal
     private name: string = "";
     private chef: User;
 
+    private hasRates: boolean;
     private averageRate?: number;
 
     private constructor(uuid: string, name: string, chef: User)
@@ -15,6 +16,8 @@ export default class Meal
         this.assertUuidIsValid(uuid);
         this.assertNameIsValid(name);
         this.chef = chef;
+
+        this.hasRates = false;
     }
 
     private assertUuidIsValid(uuid: string)
@@ -70,5 +73,10 @@ export default class Meal
     public getAverageRate(): number | undefined
     {
         return this.averageRate;
+    }
+
+    public assertHasRates()
+    {
+        this.hasRates = true;
     }
 }

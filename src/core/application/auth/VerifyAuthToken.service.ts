@@ -19,7 +19,7 @@ export default class VerifyAuthTokenService
     {
         try {
             const authUser: Authenticable = jwt.verify(this.token, "privateKey") as Authenticable;
-            return await this.userRepository.findeByUuid(authUser.uuid);
+            return await this.userRepository.findByUuid(authUser.uuid);
         } catch (error) {
             throw new InvalidAuthTokenException("Invalid token");
         }

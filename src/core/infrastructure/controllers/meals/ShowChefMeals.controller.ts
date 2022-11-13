@@ -11,7 +11,6 @@ const ShowChefMealsController = async (req: Request, res: Response) => {
     const showChefMealsService: ShowChefMealsService = new ShowChefMealsService(user, repository);
 
     const meals: Meal[] = await showChefMealsService.handle();
-    console.log("HEREEEE", meals);
 
     res.status(200).json({ data: meals });
 }

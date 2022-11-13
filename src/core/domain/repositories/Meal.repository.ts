@@ -4,5 +4,6 @@ import ModelRepository from "./Model.repository";
 
 export default interface MealRepository extends ModelRepository
 {
-    fetchByChef(chef: User): Promise<Meal[]>;
+    fetchByChefWithRateAverage(chef: User): Promise<Meal[]>;
+    fetchAllWithRegisteredRateVerification(customer: User): Promise<Meal[]>;
 }
