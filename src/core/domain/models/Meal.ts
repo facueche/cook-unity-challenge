@@ -1,5 +1,7 @@
 import EventManager from "../../../common/events/Event.manager";
 import MealCreated from "../events/MealCreated";
+import MealHasBeenRated from "../events/MealHasBeenRated";
+import Rate from "./Rate";
 import User from "./User";
 
 export default class Meal
@@ -48,6 +50,11 @@ export default class Meal
     public static make(uuid: string, name: string, chef: User): Meal
     {
         return new Meal(uuid, name, chef);
+    }
+
+    public addRate(rate: Rate)
+    {
+        EventManager.dispatch(new MealHasBeenRated(this, rate));
     }
 
     public getUuid(): string

@@ -16,6 +16,7 @@ import ChefRegisterRequest from "../requests/auth/ChefRegister.request";
 import CustomerLoginRequest from "../requests/auth/CustomerLogin.request";
 import CustomerRegisterRequest from "../requests/auth/CustomerRegister.request";
 import CreateMealRequest from "../requests/meals/CreateMeal.request";
+import RateMealRequest from "../requests/meals/RateMeal.request";
 
 export const loadApiEndpoints = (app: Application): void => {
     app.use("/chef", chefRouter);
@@ -73,6 +74,8 @@ mealRouter.post(
     "/:uuid/rate",
     AuthTokenMiddleware,
     RoleMiddleware(Role.CUSTOMER),
+    RateMealRequest,
+    RequestFiledsValidation,
     RateMealController
 );
 mealRouter.get(

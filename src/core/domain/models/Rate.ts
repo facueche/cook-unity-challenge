@@ -1,19 +1,16 @@
-import Meal from "./Meal";
 import User from "./User";
 
 export default class Rate
 {
     private uuid: string = "";
     private customer: User;
-    private meal: Meal;
     private rate: number = 0;
 
-    private constructor(uuid: string, customer: User, meal: Meal, rate: number)
+    private constructor(uuid: string, customer: User, rate: number)
     {
         this.assertUuidIsValid(uuid);
         this.assertRateIsValid(rate);
         this.customer = customer;
-        this.meal = meal;
     }
 
     private assertUuidIsValid(uuid: string)
@@ -32,9 +29,9 @@ export default class Rate
         this.rate = rate;
     }
 
-    public static register(uuid: string, customer: User, meal: Meal, rate: number): Rate
+    public static make(uuid: string, customer: User, rate: number): Rate
     {
-        return new Rate(uuid, customer, meal, rate);
+        return new Rate(uuid, customer, rate);
     }
 
     public getUuid(): string
@@ -45,11 +42,6 @@ export default class Rate
     public getCustomer(): User
     {
         return this.customer;
-    }
-
-    public getMeal(): Meal
-    {
-        return this.meal;
     }
 
     public getRate(): number

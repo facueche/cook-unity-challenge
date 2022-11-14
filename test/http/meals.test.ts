@@ -105,6 +105,7 @@ describe("Customer", () => {
         const mealRepository: MealRepository = new PrismaMealRepository();
         const mealUuid: string = mealRepository.generateUuid();
         const meal: Meal = Meal.register(mealUuid, "EggplantParmesan", chef);
+        EventManager.commitAll();
 
         const response = await request(app)
             .post(`/meals/${meal.getUuid()}/rate`)

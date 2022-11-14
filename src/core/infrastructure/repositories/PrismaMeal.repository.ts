@@ -4,9 +4,8 @@ import MealRepository from "../../domain/repositories/Meal.repository";
 import Prisma from "../singletons/Prisma";
 import PrismaModelRepository from "./PrismaModel.repository";
 import { PrismaClient } from '@prisma/client'
-import UserRepository from "../../domain/repositories/User.repository";
-import PrismaUserRepository from "./PrismaUser.repository";
 import Role from "../../domain/models/Role";
+import MealNotFoundException from "../../domain/exceptions/MealNotFound.exception";
 
 export default class PrismaMealRepository extends PrismaModelRepository implements MealRepository
 {
@@ -56,5 +55,23 @@ export default class PrismaMealRepository extends PrismaModelRepository implemen
                 meal.assertHasRates();
             return meal;
         });
+    }
+
+    public async findByUuid(uuid: string): Promise<Meal>
+    {
+        const meal = await this.prisma.meals.findFirst({
+            where: {
+                uuid
+            },
+            include: {
+                chef: true
+            }
+        });
+
+        if (meal === null)
+            throw new MealNotFoundException("Meal not found");
+
+        const chef: User = User.make(meal.chef.uuid, meal.chef.username, meal.chef.password, meal.chef.role as Role);
+        return Meal.make(meal.uuid, meal.name, chef);
     }
 }

@@ -1,6 +1,8 @@
 import EventEmitter from "../../../common/events/Event.emitter";
 import MealCreated from "../../domain/events/MealCreated";
+import MealHasBeenRated from "../../domain/events/MealHasBeenRated";
 import UserRegistered from "../../domain/events/UserRegistered";
+import RateMeal from "../listeners/RateMeal";
 import StoreMeal from "../listeners/StoreMeal";
 import StoreUser from "../listeners/StoreUser";
 
@@ -12,6 +14,9 @@ export default class EventProvider
         ],
         [MealCreated.eventName]: [
             StoreMeal.handle,
+        ],
+        [MealHasBeenRated.eventName]: [
+            RateMeal.handle,
         ],
     }
 
