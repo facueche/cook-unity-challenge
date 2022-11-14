@@ -139,13 +139,13 @@ describe("Customer", () => {
     });
 });
 
-beforeAll(() => {
-    DatabaseConfig.tearUp();
+beforeAll(async () => {
+    await DatabaseConfig.tearUp();
     generateUsersAuthToken();
 });
 
-afterAll(() => {
-    DatabaseConfig.tearDown();
+afterAll(async () => {
+    await DatabaseConfig.tearDown();
 })
 
 const generateUsersAuthToken = () => {
@@ -158,8 +158,3 @@ const generateUsersAuthToken = () => {
     chefAuthToken = authService.attemptToLogin(chef);
     customerAuthToken = authService.attemptToLogin(customer);
 }
-
-const credentials = {
-    username: "user",
-    password: "secret",
-};

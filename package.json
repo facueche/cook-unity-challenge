@@ -9,10 +9,8 @@
     "build": "tsc",
     "lint": "eslint --ignore-path .gitignore . --ext .ts",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest",
-    "database:reset": "npx prisma migrate reset --preview-feature --force && npx prisma migrate dev --name init",
-    "docker:test": "./docker-test.sh",
-    "run-jest": "npm run docker:test"
+    "test": "dotenv -e .env.test -- jest",
+    "database:reset": "npx prisma migrate reset --preview-feature --force && npx prisma db push"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +23,7 @@
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
+    "dotenv-cli": "^6.0.0",
     "eslint": "^8.9.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.4",

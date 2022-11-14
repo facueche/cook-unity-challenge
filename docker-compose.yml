@@ -40,6 +40,8 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_DB: "cookunitydbtest"
+    volumes:
+      - ./docker-config:/docker-entrypoint-initdb.d
     networks:
       - cookunity-network
 

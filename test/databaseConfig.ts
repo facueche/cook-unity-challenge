@@ -2,7 +2,7 @@ import { exec } from 'child_process';
 
 export const tearUp = () => {
     return new Promise(function (resolve, reject) {
-        exec("npx prisma migrate dev --name init", (err, stdout, stderr) => {
+        exec("npx prisma db push", (err, stdout, stderr) => {
             if (err) {
                 reject(err);
             } else {
