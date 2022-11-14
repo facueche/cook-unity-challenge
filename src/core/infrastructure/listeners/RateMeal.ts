@@ -15,7 +15,7 @@ export default class RateMeal
         await prisma.rates.create({
             data: {
                 uuid: rate.getUuid(),
-                rate: rate.getRate(),
+                rate: Number(rate.getRate()),
                 customer: {
                     connect: {
                         uuid: rate.getCustomer().getUuid(),
