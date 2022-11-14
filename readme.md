@@ -1,48 +1,72 @@
-# TypeScript Express API Bootstrap (base / project starter)
+# Cook Unity Challenge
 
-This is a repository intended to serve as a starting point if you want to bootstrap a express API project in TypeScript.
+You can see the challenge [here](docs/Challenge.pdf)
 
-## Features
-
-- [TypeScript](https://www.typescriptlang.org/) (v4)
-- [ts-node-dev](https://github.com/wclr/ts-node-dev)
-- [Prettier](https://prettier.io/)
-- [ESLint](https://eslint.org/) with:
-  - [Simple Import Sort](https://github.com/lydell/eslint-plugin-simple-import-sort/)
-  - [Import plugin](https://github.com/benmosher/eslint-plugin-import/)
-- [Jest](https://jestjs.io) with [DOM Testing Library](https://testing-library.com/docs/dom-testing-library/intro)
-- [GitHub Action workflows](https://github.com/features/actions) set up to run tests and linting on push
-
-## Running the app
+## Dependencies
 
 ```
+- NodeJS >= 16
+- NPM >= 8
+```
+
+## Prepare app
+
+```bash
+# create environment variables
+cp env.example .env
+```
+
+This projects uses Postgres as database engine and [Prisma](https://www.prisma.io/docs/concepts/database-connectors/postgresql) as ORM, so you have to define the database url on the .env file
+```bash
+# example
+DATABASE_URL=postgresql://postgres:postgres@0.0.0.0:5432/cookunitydb
+```
+
+## Running the app
+### Natively
+
+```bash
 # install dependencies
 npm install
 
 # run in dev mode on port 3000
 npm run dev
+```
 
-# generate production build
-npm run build
+### With Docker
 
-# run generated content in dist folder on port 3000
-npm run start
+Rise up the app and Postgres
+```bash
+docker-compose up
 ```
 
 ## Testing
 
-### Jest with supertest
-
+```bash
+# create test environment variable files like previous step
+cp env.example .env.test
 ```
-npm run test
+### Natively
+
+In this case, you have to have Postgres installed on your PC
+```bash
+npm test
 ```
 
-## Linting
-
+### With Docker
+```bash
+# set Postgres URL on .env.test file
+DATABASE_URL=postgresql://postgres:postgres@cook-unity-db-test:5432/cookunitydbtest
 ```
-# run linter
-npm run lint
 
-# fix lint issues
-npm run lint:fix
+```bash
+# rise the containers
+docker-compose --env-file .env.test up
+
+# run the test
+docker exec cook-unity-api npm test
 ```
+
+## Documentation
+
+* [API Docs](docs/api_docs.md)

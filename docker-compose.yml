@@ -27,6 +27,7 @@ services:
       POSTGRES_DB: "cookunitydb"
     volumes:
       - ./docker/storage/postgres:/var/lib/postgresql/data
+      - ./docker-config:/docker-entrypoint-initdb.d
     networks:
       - cookunity-network
 
