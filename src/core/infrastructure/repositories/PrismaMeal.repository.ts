@@ -47,7 +47,29 @@ export default class PrismaMealRepository extends PrismaModelRepository implemen
             INNER JOIN "Users" ON "Meals"."chefId" = "Users"."uuid"
         `;
 
-        return (meals as Array<any>).map(mealData => {
+        return this.buildMealsWithRegisteredRateVerification(meals);
+    }
+
+    public async fetchAllWithRegisteredRateVerificationByChef(customer: User, chef: User): Promise<Meal[]>
+    {
+        const meals: Array<any> = await this.prisma.$queryRaw`
+            SELECT "Meals"."uuid", "Meals"."name", "Meals"."chefId", "Users"."username" AS chef_username, "Users"."password" AS chef_password, "Users"."role" AS chef_role, (
+                SELECT COUNT("Rates"."uuid")
+                FROM "Rates"
+                WHERE "Rates"."customerId" = ${customer.getUuid()}
+                AND "Rates"."mealId" = "Meals"."uuid"
+            ) AS votes
+            FROM "Meals"
+            INNER JOIN "Users" ON "Meals"."chefId" = "Users"."uuid"
+            WHERE "Meals"."chefId" = ${chef.getUuid()}
+        `;
+
+        return this.buildMealsWithRegisteredRateVerification(meals);
+    }
+
+    private buildMealsWithRegisteredRateVerification(meals: Array<any>): Meal[]
+    {
+        return (meals).map(mealData => {
             const chef: User = User.make(mealData.chefId, mealData.chef_username, mealData.chef_password, mealData.chef_role as Role);
             const meal: Meal = Meal.make(mealData.uuid, mealData.name, chef);
             const hasRates: boolean = mealData.votes > 0;
