@@ -116,6 +116,27 @@ describe("Customer", () => {
         expect(response.body).toHaveProperty("message");
         expect(response.body.message).toBe("Rate registered");
     });
+
+    it("Should not rate meals more than once", async () => {
+        const mealRepository: MealRepository = new PrismaMealRepository();
+        const mealUuid: string = mealRepository.generateUuid();
+        const meal: Meal = Meal.register(mealUuid, "EggplantParmesan", chef);
+        EventManager.commitAll();
+
+        await request(app)
+            .post(`/meals/${meal.getUuid()}/rate`)
+            .set("Authorization", `Bearer ${customerAuthToken}`)
+            .send({ rate: 3 });
+
+        const response = await request(app)
+            .post(`/meals/${meal.getUuid()}/rate`)
+            .set("Authorization", `Bearer ${customerAuthToken}`)
+            .send({ rate: 5 });
+
+        expect(response.statusCode).toEqual(409);
+        expect(response.body).toHaveProperty("error");
+        expect(response.body.error).toBe("Meal already rated");
+    });
 });
 
 beforeAll(() => {

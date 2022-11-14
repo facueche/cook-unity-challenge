@@ -74,4 +74,16 @@ export default class PrismaMealRepository extends PrismaModelRepository implemen
         const chef: User = User.make(meal.chef.uuid, meal.chef.username, meal.chef.password, meal.chef.role as Role);
         return Meal.make(meal.uuid, meal.name, chef);
     }
+
+    public async customerAlreadyRatedMeal(customer: User, meal: Meal): Promise<boolean>
+    {
+        const rate = await this.prisma.rates.findFirst({
+            where: {
+                customerId: customer.getUuid(),
+                mealId: meal.getUuid(),
+            }
+        });
+
+        return rate !== null;
+    }
 }

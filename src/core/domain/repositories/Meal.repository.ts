@@ -4,7 +4,8 @@ import ModelRepository from "./Model.repository";
 
 export default interface MealRepository extends ModelRepository
 {
-    findByUuid(uuid: string): Promise<Meal>;
     fetchByChefWithRateAverage(chef: User): Promise<Meal[]>;
     fetchAllWithRegisteredRateVerification(customer: User): Promise<Meal[]>;
+    findByUuid(uuid: string): Promise<Meal>;
+    customerAlreadyRatedMeal(customer: User, meal: Meal): Promise<boolean>;
 }

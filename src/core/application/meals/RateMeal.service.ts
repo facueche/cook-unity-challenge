@@ -1,3 +1,4 @@
+import MealAlreadyRatedException from "../../domain/exceptions/MealAlreadyRated.exception";
 import Meal from "../../domain/models/Meal";
 import Rate from "../../domain/models/Rate";
 import User from "../../domain/models/User";
@@ -23,6 +24,9 @@ export default class RateMealService
     {
         const meal: Meal = await this.mealRepository.findByUuid(this.mealUuid);
 
+        if (await this.mealRepository.customerAlreadyRatedMeal(this.customer, meal))
+            throw new MealAlreadyRatedException("Meal already rated");
+            
         const rateUuid: string = (this.mealRepository as ModelRepository).generateUuid();
         const rate: Rate = Rate.make(rateUuid, this.customer, this.rate);
 
