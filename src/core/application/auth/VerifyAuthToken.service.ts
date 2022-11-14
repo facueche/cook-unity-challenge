@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import UserRepository from "../../domain/repositories/User.repository";
 import User from "../../domain/models/User";
 import InvalidAuthTokenException from "../../domain/exceptions/InvalidAuthToken.exception";
+import UserNotFoundException from "../../domain/exceptions/UserNotFound.exception";
 
 export default class VerifyAuthTokenService
 {
@@ -21,6 +22,9 @@ export default class VerifyAuthTokenService
             const authUser: Authenticable = jwt.verify(this.token, "privateKey") as Authenticable;
             return await this.userRepository.findByUuid(authUser.uuid);
         } catch (error) {
+            if (error instanceof UserNotFoundException)
+                throw error;
+                
             throw new InvalidAuthTokenException("Invalid token");
         }
     }
