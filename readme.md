@@ -70,3 +70,4 @@ docker exec cook-unity-api npm test
 ## Documentation
 
 * [API Docs](docs/api_docs.md)
+* [ERD](docs/CookUnityChallengeERD.png)
