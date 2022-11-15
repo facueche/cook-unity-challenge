@@ -12,7 +12,14 @@ const ShowChefMealsController = async (req: Request, res: Response) => {
 
     const meals: Meal[] = await showChefMealsService.handle();
 
-    res.status(200).json({ data: meals });
+    const response = meals.map((meal: Meal) => ({
+        uuid: meal.getUuid(),
+        meal: meal.getName(),
+        chefName: meal.getChef().getUsername(),
+        averageRate: meal.getAverageRate(),
+    }));
+    
+    res.status(200).json({ data: response });
 }
 
 export default ShowChefMealsController;

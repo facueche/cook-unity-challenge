@@ -86,4 +86,9 @@ export default class Meal
     {
         this.hasRates = true;
     }
+
+    public alreadyHasRates(): boolean
+    {
+        return this.hasRates;
+    }
 }

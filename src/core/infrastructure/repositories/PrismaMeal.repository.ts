@@ -6,6 +6,8 @@ import PrismaModelRepository from "./PrismaModel.repository";
 import { PrismaClient } from '@prisma/client'
 import Role from "../../domain/models/Role";
 import MealNotFoundException from "../../domain/exceptions/MealNotFound.exception";
+import { BareMealWithAverageRating, BareMealWithRating } from "../../domain/types/BareMeal";
+import CalculateAverageService from "../../application/meals/CalculateAverage.service";
 
 export default class PrismaMealRepository extends PrismaModelRepository implements MealRepository
 {
@@ -19,17 +21,35 @@ export default class PrismaMealRepository extends PrismaModelRepository implemen
 
     public async fetchByChefWithRateAverage(chef: User): Promise<Meal[]>
     {
-        const meals = await this.prisma.$queryRaw`
+        // THE TASK
+
+        let meals: BareMealWithRating[] = await this.prisma.$queryRaw`
+            SELECT
+                "Meals"."uuid" AS meal_id,
+                "Users"."username" AS chef_name,
+                "Meals"."name" AS meal,
+                "Rates"."rate" AS rating
+            FROM "Rates"
+            INNER JOIN "Meals" ON "Rates"."mealId" = "Meals"."uuid"
+            INNER JOIN "Users" ON "Meals"."chefId" = "Users"."uuid"
+        `;
+
+        const calculateAverageService: CalculateAverageService = new CalculateAverageService(meals, chef.getUsername());
+        const averagedMeals: BareMealWithAverageRating[] = calculateAverageService.handle();
+
+        // END THE TASK
+
+        /* const deprecatedMeals = await this.prisma.$queryRaw`
             SELECT "Meals"."uuid", "Meals"."name", "Meals"."chefId", COALESCE(FLOOR(AVG("Rates"."rate")), 0) AS rateAverage
             FROM "Meals"
             LEFT JOIN "Rates" ON "Meals"."uuid" = "Rates"."mealId"
             WHERE "Meals"."chefId" = ${chef.getUuid()}
             GROUP BY "Meals"."uuid"
-        `;
+        `; */
 
-        return (meals as Array<any>).map(mealData => {
-            const meal = Meal.make(mealData.uuid, mealData.name, chef);
-            meal.withAverageRate(mealData.rateaverage);
+        return (averagedMeals).map(mealData => {
+            const meal = Meal.make(mealData.meal_id, mealData.meal, chef);
+            meal.withAverageRate(mealData.average_rating);
             return meal;
         });
     }
