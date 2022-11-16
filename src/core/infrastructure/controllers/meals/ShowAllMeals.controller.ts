@@ -25,7 +25,8 @@ const ShowAllMealsController = async (req: Request, res: Response) => {
     const meals: Meal[] = await showAllMealsService.handle();
 
     const response = meals.map((meal: Meal) => ({
-        uuid: meal.getUuid(),
+        mealUuid: meal.getUuid(),
+        chefUuid: meal.getChef().getUuid(),
         meal: meal.getName(),
         chefName: meal.getChef().getUsername(),
         alreadyRated: meal.alreadyHasRates(),
