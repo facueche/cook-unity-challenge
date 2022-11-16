@@ -14,8 +14,8 @@ _Parameters_
 |password|string|
 
 _Returns_
-```json
-HTTP/1.1 201 Created
+```jsonc
+// HTTP/1.1 201 Created
 {
     "message": "Successfully registered",
 }
@@ -33,8 +33,8 @@ _Parameters_
 |password|string|
 
 _Returns_
-```json
-HTTP/1.1 200 OK
+```jsonc
+// HTTP/1.1 200 OK
 {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiZDc1ZjYwZTAtYmY4MC00NTQ2LThiNzYtZjkyNDMxOGNmMGMxIiwidXNlcm5hbWUiOiJjaGVmMiIsInJvbGUiOiJjaGVmIiwiaWF0IjoxNjY4NDA4MjgwfQ.wDRUAvycxGKqlMcBsTqxSScCuPnreaSVkqFRbl69H6M"
 }
@@ -56,8 +56,8 @@ _Headers_
 |Authorization|Bearer < token >|
 
 _Returns_
-```json
-HTTP/1.1 201 Created
+```jsonc
+// HTTP/1.1 201 Created
 {
     "message": "Meal created",
 }
@@ -75,8 +75,8 @@ _Headers_
 |Authorization|Bearer < token >|
 
 _Returns_
-```json
-HTTP/1.1 200 OK
+```jsonc
+// HTTP/1.1 200 OK
     {
         "data": [
             {
@@ -85,7 +85,7 @@ HTTP/1.1 200 OK
                 "meal": "Tarta de atun",
                 "uuid": "709691c0-8f59-4bcf-8d88-19ccc915e87a"
             }
-            ...
+            // ...
         ]
     }
 ```
@@ -104,8 +104,8 @@ _Parameters_
 |password|string|
 
 _Returns_
-```json
-HTTP/1.1 201 Created
+```jsonc
+// HTTP/1.1 201 Created
 {
     "message": "Successfully registered",
 }
@@ -123,8 +123,8 @@ _Parameters_
 |password|string|
 
 _Returns_
-```json
-HTTP/1.1 200 OK
+```jsonc
+// HTTP/1.1 200 OK
 {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiZDc1ZjYwZTAtYmY4MC00NTQ2LThiNzYtZjkyNDMxOGNmMGMxIiwidXNlcm5hbWUiOiJjaGVmMiIsInJvbGUiOiJjaGVmIiwiaWF0IjoxNjY4NDA4MjgwfQ.wDRUAvycxGKqlMcBsTqxSScCuPnreaSVkqFRbl69H6M"
 }
@@ -142,8 +142,8 @@ _Headers_
 |Authorization|Bearer < token >|
 
 _Returns_
-```json
-HTTP/1.1 200 OK
+```jsonc
+// HTTP/1.1 200 OK
     {
         "data": [
             {
@@ -167,7 +167,7 @@ HTTP/1.1 200 OK
                 "meal": "Sopita de caracol",
                 "mealUuid": "289ba61e-a649-4a88-8435-09a606f3c4a1"
             }
-            ...
+            // ...
         ]
     }
 ```
@@ -184,8 +184,8 @@ _Headers_
 |Authorization|Bearer < token >|
 
 _Returns_
-```json
-HTTP/1.1 200 OK
+```jsonc
+// HTTP/1.1 200 OK
     {
         "data": [
             {
@@ -202,7 +202,7 @@ HTTP/1.1 200 OK
                 "meal": "Vitel tone",
                 "mealUuid": "3b27739b-be1e-41b2-9f42-42f688630882"
             }
-            ...
+            // ...
         ]
     }
 ```
@@ -223,8 +223,8 @@ _Headers_
 |Authorization|Bearer < token >|
 
 _Returns_
-```json
-HTTP/1.1 201 Created
+```jsonc
+// HTTP/1.1 201 Created
 {
     "message": "Rate registered",
 }
